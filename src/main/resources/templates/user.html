@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=1280px, initial-scale=1.0">
+    <title>Личный кабинет</title>
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5" style="position: absolute ; width: 920px">
+    <div class="col-md-6">
+        <output th:text="'Ваш никнэйм :'+ ${nickname}"></output><br/>
+        <output th:text="'Ваш email :'+${email}"></output><br/>
+        <div sec:autorize="hasRole('ROLE_ADMIN')">
+          <a sec:autorize="hasRole('ROLE_ADMIN')" th:href="'admin'" th:text="'Админ панель'"/>
+        </div>
+    </div><br/><br/>
+    <output th:text="'Ваши комментарии :'"></output>
+    <div th:each="el : ${res}" class="alert alert-info mt-2" style="background-color: WhiteSmoke">
+        <a th:text="${el.getUser().getNickname()}"></a >
+        <small th:text="'Дата :'+${el.getDate()}" ></small>
+        <a th:text="${el.getPost().getTitle()}" th:href="'/post/'+${el.getPost().getId()}" ></a>
+        <p th:text="${el.getText()}"></p>
+    </div>
+</div>
+<div th:insert="blocks/aside :: aside"></div>
+</body>
+</html>

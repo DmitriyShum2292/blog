@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=1280px, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+<div>
+    <header th:insert="blocks/header.html :: header" style="width: 100%"></header>
+</div>
+        <div class="container mt-5" style="position: absolute; width: 70%">
+            <div class="col-md-6">
+                <div th:each="el : ${res}"  class="row no-gutters border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-100 position-relative"style="width: 920px; height: 300px">
+                    <div class="col p-4 d-flex flex-column position-static" style="background-color: WhiteSmoke; height: 300px">
+                        <strong th:text="${el.title}" class="mb-0">Title</strong>
+                        <div th:text="${el.getDateFormat()}" class="mb-1 text-muted">Date</div>
+                        <a th:text="'Автор : '+${el.getUser().getNickname()}" class="mb-1 text-muted">Подробнее</a>
+                        <div>
+                            <br/>
+                            <small class="mb-1 text-muted" style="margin-left: 5px" th:text="${el.getComments().size()}"></small>
+                            <img th:src="@{'/icons/comment.png'}" align="left" height="32" width="32"/>
+
+
+                            <img th:src="@{'/icons/eye.png'}" style="margin-left: 10px" height="32" width="32"/>
+                            <small class="mb-1 text-muted" style="margin-left: 0px"th:text="${el.getViews()}"></small>
+                        </div>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <p><a th:href="'/post/'+${el.id}"><img th:src="@{'/img/'+${el.titleImage}}" class="img-thumbnail" style="height: 300px;width: 400px"></a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-0 " style="position: relative">
+                <div th:each="el : ${res}"  class="row no-gutters border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-100 position-inherit"style="width: 920px">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <div style="text-align: center; padding-top: 30px">[(${el.p1Text})]</div>
+                        <div style="text-align: center; padding-top: 30px">
+                            <img th:if="${el.p1Image!=null}" th:src="@{'/img/'+${el.p1Image}}"  class="img-thumbnail" />
+                        </div>
+                        <div style="text-align: center;padding-top: 30px">[(${el.p2Text})]</div>
+                        <div style="text-align: center; padding-top: 30px">
+                            <img th:if="${el.p2Image!=null}" th:src="@{'/img/'+${el.p2Image}}" class="img-thumbnail"/>
+                            <div style="padding-top: 30px">[(${el.p3Text})]</div>
+                            <iframe th:if="${el.video!=null}" width="560" height="315" th:src="${el.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <div style="text-align: center;padding-top: 30px">Источник</div>
+                            <div style="text-align: center;padding-top: 30px">[(${el.source})]</div>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="'/post/'+${el.id}+'/edit'" class="btn btn-warning">Редактировать</a><br><br>
+                            <form th:action="'/post/'+${el.id}+'/remove'" method="post">
+                                <button class="btn btn-warning" type="submit">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ANONYMOUS')" >
+                    <div style="text-align: center;padding-top: 30px;color: darkred">Комментарии доступны только авторизованным пользователям
+                        <a class="btn btn-outline-primary" href="/login">Войти</a>
+                    </div>
+                </div>
+                <div>
+                    <div th:each="el : ${res}" class="col-md-10" style="width: 920px">
+
+                        <form sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" th:action="@{/post/addcomment}"  method="post">
+                            <input type="text" name="authname" th:value="${#authentication.getName()}" style="visibility: hidden">
+                            <input type="text" name="id" th:value="${el.getId()}" style="visibility: hidden">
+                            <textarea name="commenttext" placeholder="Добавьте комментарий" class="form-control"></textarea><br>
+                            <button class="btn btn-warning" type="submit">Добавить</button>
+                        </form>
+                        <div th:each="el : ${comments}" class="alert alert-info mt-2" style="background-color: WhiteSmoke">
+                            <a th:text="${el.getUser().getNickname()}"></a >
+                            <small th:text="'Дата :'+${el.getDate()}" ></small>
+                            <p th:text="${el.getText()}"></p>
+                            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:action="@{'/admin/delete/comment/'+${el.getId()}}" method="post">
+                                    <button class="btn btn-warning" type="submit">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <footer th:insert="blocks/footer :: footer" style="background-color: transparent" ></footer>                </div>
+            </div>
+        </div>
+</div>
+<div th:insert="blocks/aside :: aside"></div>
+</body>
+
+</html>

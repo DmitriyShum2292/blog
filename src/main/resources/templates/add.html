@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <title>Добавление статьи</title>
+    <meta name="viewport" content="width=1280px, initial-scale=1.0">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+    <div class="container mt-5">
+        <h1>Добавление статьи</h1>
+        <form th:action="@{/post/add}"  method="post" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="Введите название статьи" class="form-control"><br>
+            <input type="text" name="anons" placeholder="Введите анонс" class="form-control"><br>
+            <small >Изображение заголовка</small><br/>
+            <input type="file" name="titleImage"><br/><br/>
+            <textarea name="p1Text" placeholder="Первый параграф" class="form-control"></textarea><br>
+            <small >Изображение после 1го абзаца</small><br/>
+            <input type="file" name="p1Image"><br/><br/>
+            <textarea name="p2Text" placeholder="Второй параграф" class="form-control"></textarea><br>
+            <small >Изображение после 2го абзаца</small><br/>
+            <input type="file" name="p2Image"><br/><br/>
+            <textarea name="p3Text" placeholder="Третий параграф" class="form-control"></textarea><br>
+            <input type="text" name="video" placeholder="Ссылка на видео" class="form-control"><br><br>
+            <small >Источники</small><br/>
+            <textarea name="source" placeholder="Источники" class="form-control"></textarea><br>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>

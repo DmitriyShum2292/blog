@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=1280px, initial-scale=1.0">
+</head>
+<body>
+<div>
+    <header th:insert="blocks/header :: header"></header>
+</div>
+
+<div class="container mt-5" style="position: absolute; width: 920px" >
+    <div class="col-md-6">
+        <div th:each="el : ${result}"  class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"style="width: 920px;height: 300px;background: white">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong th:text="${el.title}" class="mb-0">Title</strong>
+                <div th:text="${el.getDateFormat()}" class="mb-1 text-muted">Date</div>
+                <div>
+                    <br/>
+                    <small class="mb-1 text-muted" style="margin-left: 5px" th:text="${el.getComments().size()}"></small>
+                    <img th:src="@{'/icons/comment.png'}" align="left" height="32" width="32"/>
+                    <img th:src="@{'/icons/eye.png'}" style="margin-left: 10px" height="32" width="32"/>
+                    <small class="mb-1 text-muted" style="margin-left: 0px"th:text="${el.getViews()}"></small>
+                </div>
+                <br/><br/>
+                <div style="max-width: 400px">
+                    <medium th:text="${el.anons}">Anons</medium>
+                </div>
+                <a th:href="'/post/'+${el.id}" style="position: absolute; bottom: 15px" class="stretched-link">Подробнее</a>
+            </div>
+            <div class="col-auto d-none d-lg-block" th:href="'/post/'+${el.id}">
+                <p><a th:href="'/post/'+${el.id}"><img th:src="@{'/img/'+${el.titleImage}}" class="img-thumbnail" style="height: 300px;width: 400px"></a></p>
+            </div>
+        </div>
+        <div th:insert="blocks/nav :: nav"></div>
+        <footer th:insert="blocks/footer :: footer" style="background-color: transparent" ></footer>
+    </div>
+</div>
+<div th:insert="blocks/aside :: aside" style="background: transparent"></div>
+
+</body>
+</html>

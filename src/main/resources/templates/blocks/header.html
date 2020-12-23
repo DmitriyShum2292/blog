@@ -1,0 +1,29 @@
+<div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" style="background-image: url('https://img4.goodfon.ru/original/1920x1080/a/8b/vector-blue-squares-abstract-background-geometric.jpg');width: auto">
+        <h5 class="my-0 mr-md-auto font-weight-normal">
+            <a class="p-2 text-dark" href="/">
+                <img th:src="@{'/icons/penguin-64.png'}" width="64"/>
+            </a>
+        </h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="https://www.youtube.com/channel/UC0mfibKMayprWERdBlBXLPA/videos?view_as=subscriber">
+                <img th:src="@{'/icons/youtube.png'}"  height="32" width="32"/>
+            </a>
+            <a class="p-2 text-dark" href="t.me/linuxmix">
+                <img th:src="@{'/icons/telegram.png'}"  height="32" width="32"/>
+            </a>
+            <a class="p-2 text-dark" href="https://twitter.com/11AjOdGLR43Cbek">
+                <img th:src="@{'/icons/twitter.png'}"  height="32" width="32"/>
+            </a>
+        </nav>
+        <div sec:authorize="hasRole('ROLE_ANONYMOUS')" >
+            <a class="btn btn-outline-primary" href="/login" style="color: white">Войти</a>
+        </div>
+        <div sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+            <a th:href="'/user'" th:text="'Личный кабинет'" />
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Выход" class="btn btn-outline-primary" style="color: white"/>
+            </form>
+        </div>
+    </div>
+</div>

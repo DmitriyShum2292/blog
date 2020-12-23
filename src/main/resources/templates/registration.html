@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=1280px, initial-scale=1.0">
+    <title>Регистрация</title>
+</head>
+<body>
+    <header th:insert="blocks/header :: header"></header>
+
+    <div class="container mt-5" style  = "width: 227px; height: 138px; margin-left: auto; margin-right: auto;">
+        <h1 style = "width: 227px; height: 138px; margin-left: auto; margin-right: auto;">Регистрация</h1>
+        <form th:action="@{/registration}" method="post" style  = "width: 227px; height: 138px; margin-left: auto; margin-right: auto;">
+            <div><label><input type="email" name="login" placeholder="Email" required autofocus/></label></div>
+            <div><label><input type="text" name="nickname" placeholder="Nickname" required autofocus/></label></div>
+            <div><label><input type="password" name="password"placeholder="Password" required autofocus/></label></div>
+            <div><label><input type="password" name="repassword"placeholder="Re-password" required autofocus/></label></div>
+
+            <div><input type="submit" value="Зарегистрироватся" class="btn btn-success"/></div><br>
+
+            <output th:text="${message}"></output>
+        </form>
+    </div>
+</div>
+</body>
+</html>

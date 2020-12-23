@@ -1,0 +1,8 @@
+<div th:fragment="nav">
+    <nav class="blog-pagination">
+        <a class="btn btn-outline-primary" th:if="${id!=null && id!=1}" th:href="'/page/'+${id-1}">Назад</a>
+        <medium th:text="${id}" class="card-text mb-auto" >Anons</medium>
+        <a class="btn btn-outline-primary" th:if="${id!=null && id<=lastPage}" th:href="'/page/'+${id+1}">Вперед</a>
+        <a class="btn btn-outline-primary" th:unless="${id!=null}" href="/page/2">Вперед</a>
+    </nav>
+</div>

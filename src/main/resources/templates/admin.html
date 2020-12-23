@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=1280px, initial-scale=1.0">
+    <title>Админ панель</title>
+</head>
+<body>
+    <header th:insert="blocks/header :: header"></header>
+    <a th:text="'Добавить статью на сайт'" href="/post/add"></a>
+    <div style="overflow: hidden;">
+        <div style="width: 1000%;">
+        </div>
+        <div style="float: left; width: 400px;">
+            <output th:text="'Все пользователи :'"></output>
+            <div th:each="el : ${users}" class="alert alert-info mt-2" style="background-color: aliceblue">
+                <a th:text="${el.getNickname()}"></a >
+                <small th:text="${el.getLogin()}" ></small>
+                <p th:text="${el.getAuthority()}"></p>
+                <small th:text="'active :'+${el.isActive()}" ></small>
+                <form th:if="${el.isActive()==true}" th:action="@{'/admin/block/'+${el.getLogin()}}" method="POST">
+                    <input type="submit" value="Заблокировать" class="btn btn-outline-primary"/>
+                </form>
+                <form th:if="${el.isActive()==false}" th:action="@{'/admin/unblock/'+${el.getLogin()}}" method="POST">
+                    <input type="submit" value="Разблокировать" class="btn btn-outline-primary"/>
+                </form>
+                <br/>
+            </div>
+        </div>
+        <div style="float: left; width: 400px;">
+            <form th:action="@{'/admin'}" method="post" style  = "width: 227px; height: 138px; margin-left: auto; margin-right: auto;">
+                <output th:text="'Поиск по нику :'"></output>
+                <input type="text" name="nickname" placeholder="Nickname" required autofocus>
+                <input type="submit" value="Найти" class="btn btn-success"/>
+            </form>
+            <div th:if="${user!=null}" class="alert alert-info mt-2" style="width: 400px; background-color: aliceblue;margin-left: 70px" >
+                <a th:text="${user.getNickname()}"></a >
+                <small th:text="${user.getLogin()}" ></small>
+                <p th:text="${user.getAuthority()}"></p>
+                <small th:text="'active :'+${user.isActive()}" ></small>
+                <form th:if="${user.isActive()==true}" th:action="@{'/admin/block/'+${user.getLogin()}}" method="POST">
+                    <input type="submit" value="Заблокировать" class="btn btn-outline-primary"/>
+                </form>
+                <form th:if="${user.isActive()==false}" th:action="@{'/admin/unblock/'+${user.getLogin()}}" method="POST">
+                    <input type="submit" value="Разблокировать" class="btn btn-outline-primary"/>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
+</html>
