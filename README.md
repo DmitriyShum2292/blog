@@ -1,1 +1,1 @@
-Before starting, you need to configure application.properties with access to your database, paths for uploaded files, and your email account.Need to generate a self-signed certificate or get it.You also need to make an administrator account.To do this, you need to register and confirm your account by email.Then manually in the database in the my_user table, replace the authority field from ROLE_USER to ROLE_ADMIN.After that, the user will have access to the admin panel and the ability to add articles and manage users.
+
